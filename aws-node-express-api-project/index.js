@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const serverless = require("serverless-http");
 const bodyParser = require("body-parser");
 const express = require("express");
@@ -10,6 +11,31 @@ const client = require("twilio")(accountSid, authToken);
 
 app.use(bodyParser.json({ strict: false }));
 
+async function authMiddleware(req, res, next) {
+  try {
+    const authorization = req.headers.authorization;
+
+    if (!authorization) {
+      res
+        .status(401)
+        .send({ message: "No se encontro ningún token de autorización" });
+      return;
+    }
+
+    const _token = authorization.replace("Bearer ", "");
+
+    await jwt.verify(_token, "secret");
+  } catch (e) {
+    if (e.message === "invalid signatures") {
+      res.status(400).send({ message: e.message });
+    } else {
+      res.status(500).send({ message: e.message, detail: e });
+    }
+  }
+
+  next();
+}
+
 /**
  * 
   curl --location 'localhost:3000/send-message' \
@@ -21,7 +47,7 @@ app.use(bodyParser.json({ strict: false }));
  * 
  */
 
-app.post("/send-message", async (req, res, next) => {
+app.post("/send-message", authMiddleware, async (req, res, next) => {
   try {
     const { body, to } = req.body;
 
