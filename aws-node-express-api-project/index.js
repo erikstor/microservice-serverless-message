@@ -61,6 +61,15 @@ app.post("/send-message", authMiddleware, async (req, res, next) => {
       message: "Se envió el mensaje correctamente",
     });
   } catch (e) {
+    
+    if(e.code === 20003 && e.status === 401) {
+
+      e.message = `${e.message}: Las credenciales del proveedor no son validas`
+
+      next(e)
+      return 
+    }
+
     next(e);
   }
 });
