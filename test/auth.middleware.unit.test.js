@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 // Importa tu función authMiddleware aquí
-const { authMiddleware } = require("../middleware/auth.middleware.js");
+const { authMiddleware } = require("../src/middleware/auth.middleware.js");
 
 describe("Auth Middleware", () => {
   // Prueba unitaria para el middleware de autorización
