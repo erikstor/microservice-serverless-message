@@ -33,6 +33,8 @@ describe("Send Message Function", () => {
     // Ejecuta el middleware con los objetos mock
     await sendMessage(req, res, next);
 
+    console.log(res.status.mock);
+
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({ message: "Se envió el mensaje correctamente", });
     expect(next).not.toHaveBeenCalled();
