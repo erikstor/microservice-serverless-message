@@ -36,4 +36,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: Deploy to AWS
-        run: npx serverless deploy --stage ${{ env.SERVERLESS_STAGE }} --region ${{ env.AWS_REGION }} SLS_INTERACTIVE_SETUP_ENABLE=1
+        run: npx serverless deploy --stage ${{ env.SERVERLESS_STAGE }} --region ${{ env.AWS_REGION }} 
