@@ -11,8 +11,6 @@ env:
   AWS_REGION: 'us-east-2'
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  SERVERLESS_STAGE: dev-aws-node-express-api-project
-  SERVERLESS_SERVICE: aws-node-express-api-project-dev
     
 jobs:
   build-and-test:
@@ -36,4 +34,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: Deploy to AWS
-        run: npx serverless deploy --stage ${{ env.SERVERLESS_STAGE }} --region ${{ env.AWS_REGION }} 
+        run: npx serverless deploy --region ${{ env.AWS_REGION }} --verbose
