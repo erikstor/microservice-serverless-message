@@ -1,5 +1,6 @@
 const {authMiddleware} = require('./middleware/auth.middleware.js')
 const {sendMessage} = require('./services/send-message.service.js')
+const {health} = require('./services/health.service.js')
 const serverless = require("serverless-http");
 const bodyParser = require("body-parser");
 const express = require("express");
@@ -21,5 +22,8 @@ app.use(bodyParser.json({ strict: false }));
  */
 
 app.post("/send-message", authMiddleware, sendMessage);
+
+
+app.get("/health", health);
 
 module.exports.handler = serverless(app);
